@@ -3,20 +3,14 @@ package com.fetchreward.pointsservice.models;
 import java.util.Date;
 
 public class Transaction {
-    private final int id;
     private final String payer;
     private int points;
     private final Date timestamp;
 
-    public Transaction(int id, String payer, int points, Date timestamp) {
-        this.id = id;
+    public Transaction(String payer, int points, Date timestamp) {
         this.payer = payer;
         this.points = points;
         this.timestamp = timestamp;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getPayer() {

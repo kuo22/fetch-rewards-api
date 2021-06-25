@@ -35,7 +35,7 @@ public class RewardController {
     @PostMapping(path = "/spend/{id}", consumes = "application/json")
     public List<Spending> postSpend(@PathVariable int id, @RequestBody Points points) {
         if (!users.containsKey(id)) {
-            throw new IllegalArgumentException("No valid user");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "User does not exist.");
         }
 
         User user = users.get(id);
@@ -50,10 +50,11 @@ public class RewardController {
 
     public List<Spending> spendPoints(int id, int pointsToSpend) {
         User user = users.get(id);
-        Queue<Transaction> transactions = user.getTransactions();
-        Transaction[] tArray = transactions.toArray(Transaction[]::new);
-        Arrays.sort(tArray, Comparator.comparing(Transaction::getTimestamp));
-        Iterator<Transaction> iterator = Arrays.stream(tArray).iterator();
+
+        // Sort by oldest transactions to be spent first
+        List<Transaction> transactions = user.getTransactions();
+        transactions.sort(Comparator.comparing(Transaction::getTimestamp));
+        Iterator<Transaction> iterator = transactions.iterator();
 
         List<Spending> spendings = new ArrayList<>();
         Map<String, Integer> spendingsMap = new HashMap<>();

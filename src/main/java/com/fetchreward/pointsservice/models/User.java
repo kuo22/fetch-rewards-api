@@ -4,8 +4,7 @@ import java.util.*;
 
 public class User {
     private final int id;
-    //private final Map<String, Integer> balance = new HashMap<>();
-    private final Queue<Transaction> transactions = new PriorityQueue<>(Comparator.comparing(Transaction::getTimestamp));
+    private final List<Transaction> transactions = new ArrayList<>();
 
     public User(int id) {
         this.id = id;
@@ -26,7 +25,7 @@ public class User {
         return balance;
     }
 
-    public Queue<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
