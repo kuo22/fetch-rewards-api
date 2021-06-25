@@ -38,6 +38,10 @@ public class RewardController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "User does not exist.");
         }
 
+        if (points.points <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User cannot spend a negative amount.");
+        }
+
         User user = users.get(id);
         int totalBalance = user.getTotalBalance();
 
